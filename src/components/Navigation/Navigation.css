@@ -1,0 +1,22 @@
+.navigation {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation__auth {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation__bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation__link {
+
+}
+
+.navigation__account-icon {
+
+}
