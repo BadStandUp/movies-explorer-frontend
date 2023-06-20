@@ -14,9 +14,48 @@
 }
 
 .navigation__link {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 0 30px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+}
 
+.navigation__link_active {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+.navigation__link_auth {
+    display: flex;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    margin-left: 30px;
+    align-items: center;
+}
+
+.navigation__link_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #2BE080;
+    height: 32px;
+    width: 76px;
+    border-radius: 3px;
+    text-align: center;
 }
 
 .navigation__account-icon {
-
+    height: 30px;
+    width: 30px;
+    margin: 0 0 0 13px;
 }

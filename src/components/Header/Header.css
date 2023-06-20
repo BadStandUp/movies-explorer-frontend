@@ -1,8 +1,23 @@
 .header {
     display: flex;
-    justify-content: space-between;
+    max-width: 1280px;
+    width: 100%;
+    position: absolute;
 }
 
 .header__container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 18px 70px;
+}
 
+.header__logo {
+    height: 38px;
+    width: 38px;
+}
+
+.header__logo-link {
+    height: 38px;
+    width: 38px;
 }

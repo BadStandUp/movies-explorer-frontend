@@ -5,14 +5,12 @@ export default function Footer() {
 
     return (
         <footer className='footer'>
-            <div>
-                <p>Учебный проект Яндекс.Практикум х BeatFilm.</p>
-            </div>
-            <div>
+                <h3 className='footer__heading'>Учебный проект Яндекс.Практикум х BeatFilm.</h3>
+            <div className='footer__container'>
                 <p className='footer__date'>&copy; {date}</p>
                 <div className='footer__links'>
-                    <a href="#">Яндекс.Практикум</a>
-                    <a href="#">Github</a>
+                    <a href="#" className='footer__link'>Яндекс.Практикум</a>
+                    <a href="#" className='footer__link'>Github</a>
                 </div>
             </div>
         </footer>

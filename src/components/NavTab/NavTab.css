@@ -1,4 +1,25 @@
 .nav-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 66px;
     background-color: black;
+}
+
+.nav-tab__links {
+
+}
+
+.nav-tab__link {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px white solid;
+    margin-right: 40px;
+}
+
+.nav-tab__link:last-of-type {
+    margin-right: 0;
 }

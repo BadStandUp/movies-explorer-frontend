@@ -6,11 +6,11 @@ export default function Navigation() {
 	return (
 		<nav className='navigation'>
 			<div className='navigation__auth'>
-				<NavLink to='/signup' className='navigation__link'>Регистрация</NavLink>
-				<NavLink to='/signin' className='navigation__link'>Войти</NavLink>
+				<NavLink to='/signup' className='navigation__link navigation__link_auth '>Регистрация</NavLink>
+				<NavLink to='/signin' className='navigation__link navigation__link_auth navigation__link_button'>Войти</NavLink>
 			</div>
 			<div className='navigation__bar'>
-				<NavLink to='/movies' className='navigation__link'>Фильмы</NavLink>
+				<NavLink to='/movies' className='navigation__link navigation__link_active'>Фильмы</NavLink>
 				<NavLink to='/saved-movies' className='navigation__link'>Сохранённые фильмы</NavLink>
 				<NavLink to='/profile' className='navigation__link'>
 					<p className='navigation__link'>Аккаунт</p>
