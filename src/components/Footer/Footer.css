@@ -9,6 +9,7 @@
     font-weight: 400;
     margin: 79px 0 20px 0;
     color: #A0A0A0;
+    text-align: center;
 
 }
 
@@ -28,13 +29,14 @@
 }
 
 .footer__links {
-
+    display: flex;
+    flex-direction: row;
 }
 
 .footer__link {
     font-size: 13px;
     font-weight: 400;
-    margin: 0;
+    margin: 0 0 0 20px;
     color: black;
     text-decoration: none;
 }

@@ -14,6 +14,12 @@
     justify-content: space-between;
     margin: 23px 70px 0 70px;
     border-top: 1px solid black;
+    padding: 66px 0 101px 0;
+}
+
+.about-me__description {
+    display: flex;
+    flex-direction: column;
 }
 
 .about-me__name {
@@ -23,18 +29,20 @@
     margin: 0;
 }
 
-.about-me__description {
+.about-me__about {
     font-size: 18px;
     font-weight: 500;
     line-height: 20px;
     margin: 0;
+    padding-top: 18px;
 }
 
-.about-me__text {
+.about-me__paragraph {
     font-size: 16px;
     font-weight: 400;
     line-height: 22px;
     margin: 0;
+    padding-top: 26px;
 }
 
 .about-me__link {
@@ -42,11 +50,12 @@
     font-weight: 500;
     text-decoration: none;
     color: black;
-    margin: 0;
+    margin: 99px 0 0 0;
 }
 
 .about-me__image {
     height: 327px;
     width: 270px;
     background-color: #A0A0A0;
+    border-radius: 10px;
 }

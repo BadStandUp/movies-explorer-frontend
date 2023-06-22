@@ -1,0 +1,75 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    padding: 70px 0;
+    align-items: center;
+}
+
+.register__logo {
+    height: 38px;
+    width: 38px;
+}
+
+.register__logo-link {
+    height: 38px;
+    width: 38px;
+    margin: 0 0 0 0;
+}
+
+.register__heading {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 40px 0 0 0;
+}
+
+.register__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register__form-label {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0 0 0;
+}
+
+.register__form-text {
+    font-size: 10px;
+    font-weight: 400;
+    color: #A0A0A0;
+}
+
+.register__form-input{
+    width: 396px;
+    height: 45px;
+    background-color: #F2F2F2;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    margin: 10px 0 0 0;
+}
+
+.register__form-submit {
+    width: 396px;
+    height: 45px;
+    background-color: #3456F3;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    margin: 69px 0 0 0;
+}
+
+.register__text {
+    font-size: 14px;
+    font-weight: 400;
+    color: #A0A0A0;
+    margin: 16px 0 0 0;
+}
+
+.register__link {
+    font-size: 14px;
+    font-weight: 400;
+    color: #3456F3;
+    text-decoration: none;
+}

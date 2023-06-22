@@ -15,9 +15,15 @@ export default function AboutProject() {
 						<p className='about-project__description-text'>У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
 					</div>
 				</div>
-				<div>
-					<div></div>
-					<div></div>
+				<div className='about_project__graph'>
+					<div className='about_project__graph-container'>
+						<div className='about_project__graph-progress'>1 неделя</div>
+						<div className='about_project__graph-empty'>4 недели</div>
+					</div>
+					<div className='about_project__graph-description'>
+						<div className='about_project__graph-description-frontend'>Back-end</div>
+						<div className='about_project__graph-description-backend'>Front-end</div>
+					</div>
 				</div>
 			</div>
 		</div>
