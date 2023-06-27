@@ -1,0 +1,26 @@
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 246px 0;
+}
+
+.not-found__heading {
+    font-size: 140px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.not-found__text {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.not-found__quit {
+    font-size: 14px;
+    font-weight: 400;
+    color: #3456F3;
+    text-decoration: none;
+    margin: 184px 0;
+}
