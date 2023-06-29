@@ -26,9 +26,10 @@ export default function Login() {
 							className='login__form-input'
 						/>
 					</label>
+					<span className='login__form-error'>Что-то пошло не так...</span>
 					<button type="submit" className='login__form-submit'>Войти</button>
 				</form>
-				<p className='register__text'>Ещё не зарегистрированы?<NavLink to='/signup' className='register__link'> Регистрация</NavLink></p>
+				<p className='login__text'>Ещё не зарегистрированы?<NavLink to='/signup' className='login__link'> Регистрация</NavLink></p>
 			</div>
 		</main>
 	)

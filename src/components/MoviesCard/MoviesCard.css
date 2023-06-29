@@ -1,8 +1,8 @@
 .movies-card {
     display: flex;
     flex-direction: column;
-    width: 270px;
-    height: 228px;
+    min-width: 270px;
+    height: auto;
     margin: 0 0 18px 0;
     transition: transform 0.3s ease;
 }
@@ -30,6 +30,9 @@
     font-size: 13px;
     font-weight: 500;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .movies-card__duration {
@@ -68,5 +71,21 @@
 }
 
 .movies-card__like-button:hover {
-    opacity: 0.8;
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 769px) {
+    .movies-card {
+
+    }
+
+    .movies-card__image {
+        height: 190px;
+    }
+}
+
+@media screen and (max-width: 431px) {
+    .movies-card__image {
+        height: 168px;
+    }
 }

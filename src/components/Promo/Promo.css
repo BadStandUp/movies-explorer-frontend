@@ -19,3 +19,24 @@
     line-height: 58px;
     text-align: center;
 }
+
+@media screen and (max-width: 769px) {
+    .promo {
+        height: 784px;
+    }
+    .promo__heading {
+        margin: 0 30px;
+    }
+}
+
+@media screen and (max-width: 431px) {
+    .promo {
+        height: 570px;
+    }
+
+    .promo__heading {
+        font-size: 31px;
+        line-height: 39px;
+        margin: 0 10px;
+    }
+}

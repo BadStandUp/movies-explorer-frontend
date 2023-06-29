@@ -3,7 +3,7 @@
     flex-direction: column;
     max-width: 1140px;
     margin: 0 70px;
-    padding: 80px 0 0 0;
+    padding: 80px 0 0;
 }
 
 .movies-card-list__grid {
@@ -29,4 +29,18 @@
 
 .movies-card-list__more:hover {
     opacity: 0.8;
+}
+
+@media screen and (max-width: 769px) {
+    .movies-card-list {
+        margin: 0 50px;
+        padding: 70px 0 0;
+}
+}
+
+@media screen and (max-width: 431px) {
+    .movies-card-list {
+        margin: 0 18px;
+        padding: 40px 0 0;
+    }
 }

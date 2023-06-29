@@ -3,21 +3,47 @@ import './Navigation.css';
 import account_icon from '../../images/account_icon.svg';
 
 export default function Navigation() {
+	const menuToggle = () => {
+		document.querySelector('.mobile-nav').classList.toggle('mobile-nav__active');
+	}
+
+	const linkClick = () => {
+		document.querySelector('.mobile-nav').classList.remove('mobile-nav__active');
+	}
+
 	return (
 		<nav className='navigation'>
-			<div className='navigation__auth'>
-				<NavLink to='/signup' className='navigation__link navigation__link_auth '>Регистрация</NavLink>
-				<NavLink to='/signin' className='navigation__link navigation__link_auth navigation__link_button'>Войти</NavLink>
+			<div className='navigation__container'>
+				<div className='navigation__auth'>
+					<NavLink to='/signup' className='navigation__link navigation__link_auth '>Регистрация</NavLink>
+					<NavLink to='/signin' className='navigation__link navigation__link_auth navigation__link_button'>Войти</NavLink>
+				</div>
+				<div className='navigation__bar'>
+					<NavLink to='/movies' className={({isActive}) => `navigation__link ${isActive ? "navigation__link_active" : ""}`}>Фильмы</NavLink>
+					<NavLink to='/saved-movies' className={({isActive}) => `navigation__link ${isActive ? "navigation__link_active" : ""}`}>Сохранённые фильмы</NavLink>
+					<NavLink to='/profile' className={({isActive}) => `navigation__link-account ${isActive ? "navigation__link-account_active" : ""}`}>
+						<p className='navigation__account-text'>Аккаунт</p>
+						<img src={account_icon} alt="Аккаунт" className='navigation__account-icon'/>
+					</NavLink>
+				</div>
 			</div>
-			<div className='navigation__bar'>
-				<NavLink to='/movies' className='navigation__link navigation__link_active'>Фильмы</NavLink>
-				<NavLink to='/saved-movies' className='navigation__link'>Сохранённые фильмы</NavLink>
-				<NavLink to='/profile' className='navigation__link'>
-					<p className='navigation__link'>Аккаунт</p>
-					<img src={account_icon} alt="Аккаунт" className='navigation__account-icon'/>
-				</NavLink>
+			<button className='burger-menu' onClick={menuToggle}></button>
+			<div className="mobile-nav">
+				<div className="mobile-nav__container">
+					<button className='mobile-nav__quit-button' onClick={menuToggle}></button>
+					<div className='mobile-nav__auth'>
+						<NavLink to='/signup' onClick={linkClick} className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Регистрация</NavLink>
+						<NavLink to='/signin' onClick={linkClick} className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Войти</NavLink>
+					</div>
+					<div className='mobile-nav__bar'>
+						<NavLink to='/movies' onClick={linkClick} className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Фильмы</NavLink>
+						<NavLink to='/saved-movies' onClick={linkClick} className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Сохранённые фильмы</NavLink>
+						<NavLink to='/profile' onClick={linkClick} className={({isActive}) => `mobile-nav__link-account ${isActive ? "mobile-nav__link-account_active" : ""}`}>
+							<p className='mobile-nav__account-text'>Аккаунт</p>
+							<img src={account_icon} alt="Аккаунт" className='mobile-nav__account-icon'/>
+						</NavLink>
+					</div>
+				</div>
 			</div>
-
 		</nav>
-	)
-}
+	)}

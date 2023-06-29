@@ -34,6 +34,7 @@ export default function Register() {
 							className='register__form-input'
 						/>
 					</label>
+					<span className='register__form-error'>Что-то пошло не так...</span>
 					<button type="submit" className='register__form-submit'>Зарегистрироваться</button>
 				</form>
 				<p className='register__text'>Уже зарегистрированы?<NavLink to='/signin' className='register__link'> Войти</NavLink></p>
