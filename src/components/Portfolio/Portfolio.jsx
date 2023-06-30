@@ -2,7 +2,7 @@ import './Portfolio.css';
 
 export default function Portfolio() {
 	return (
-		<div className='portfolio'>
+		<section className='portfolio'>
 			<h4  className='portfolio__heading'>Портфолио</h4>
 			<a href='https://github.com/BadStandUp/how-to-learn' className='portfolio__link' rel='nofollow noopener noreferrer' target='_blank'>
 				<span>Статичный сайт</span>
@@ -16,6 +16,6 @@ export default function Portfolio() {
 				<span>Одностраничное приложение</span>
 				<span>&#8599;</span>
 			</a>
-		</div>
+		</section>
 	)
 }

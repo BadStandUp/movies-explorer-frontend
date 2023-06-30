@@ -65,12 +65,13 @@
 
 .about_project__graph-progress {
     width: 20%;
-    background-color: #2BE080;
+    background-color: black;
     font-size: 14px;
     font-weight: 400;
     text-align: center;
     margin: 0 auto;
     padding: 9px 0;
+    color: white;
 }
 
 .about_project__graph-empty {

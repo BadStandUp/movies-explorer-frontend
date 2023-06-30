@@ -32,6 +32,7 @@ export default function Navigation() {
 				<div className="mobile-nav__container">
 					<button className='mobile-nav__quit-button' onClick={menuToggle}></button>
 					<div className='mobile-nav__auth'>
+						<NavLink to='/' onClick={linkClick} className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Главная</NavLink>
 						<NavLink to='/signup' onClick={linkClick} className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Регистрация</NavLink>
 						<NavLink to='/signin' onClick={linkClick} className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Войти</NavLink>
 					</div>
@@ -45,5 +46,6 @@ export default function Navigation() {
 					</div>
 				</div>
 			</div>
+			<div className='overlay'></div>
 		</nav>
 	)}
