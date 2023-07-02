@@ -16,6 +16,7 @@ export default function Login() {
 							type="email"
 							name="email"
 							className='login__form-input'
+							required
 						/>
 					</label>
 					<label className='login__form-label'>
@@ -24,6 +25,7 @@ export default function Login() {
 							type="password"
 							name="password"
 							className='login__form-input'
+							required
 						/>
 					</label>
 					<span className='login__form-error'>Что-то пошло не так...</span>

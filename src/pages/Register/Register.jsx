@@ -16,6 +16,7 @@ export default function Register() {
 							type="text"
 							name="name"
 							className='register__form-input'
+							required
 						/>
 					</label>
 					<label className='register__form-label'>
@@ -24,6 +25,7 @@ export default function Register() {
 							type="email"
 							name="email"
 							className='register__form-input'
+							required
 						/>
 					</label>
 					<label className='register__form-label'>
@@ -32,6 +34,7 @@ export default function Register() {
 							type="password"
 							name="password"
 							className='register__form-input'
+							required
 						/>
 					</label>
 					<span className='register__form-error'>Что-то пошло не так...</span>

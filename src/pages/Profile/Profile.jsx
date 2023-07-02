@@ -1,6 +1,5 @@
 import './Profile.css';
 import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import {NavLink} from "react-router-dom";
 
 export default function Profile() {
@@ -24,7 +23,6 @@ export default function Profile() {
 					<NavLink to='/' className='profile__quit'>Выйти из аккаунта</NavLink>
 				</div>
 			</main>
-			<Footer />
 		</>
 	)
 }

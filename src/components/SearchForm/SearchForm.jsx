@@ -2,10 +2,10 @@ import './SearchForm.css';
 import searchIcon from '../../images/search-icon.svg';
 export default function SearchForm() {
 	return (
-		<div className='search-form'>
+		<section className='search-form'>
 			<div className='search-form__search-bar'>
 				<img src={searchIcon} alt="" className='search-form__icon'/>
-				<input type="text" placeholder='Фильмы' className='search-form__input'/>
+				<input type="text" placeholder='Фильмы' className='search-form__input' maxLength='50'/>
 				<button type='submit' className='search-form__button'>Найти</button>
 			</div>
 			<div className='search-form__switch'>
@@ -15,6 +15,6 @@ export default function SearchForm() {
 				</label>
 				<p className='search-form__heading'>Короткометражки</p>
 			</div>
-		</div>
+		</section>
 	)
 }

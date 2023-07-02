@@ -1,4 +1,7 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/fonts.css);
 
-
+html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+}

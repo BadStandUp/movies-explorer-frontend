@@ -5,10 +5,12 @@ import account_icon from '../../images/account_icon.svg';
 export default function Navigation() {
 	const menuToggle = () => {
 		document.querySelector('.mobile-nav').classList.toggle('mobile-nav__active');
+		document.querySelector('.overlay').classList.toggle('overlay_active');
 	}
 
 	const linkClick = () => {
 		document.querySelector('.mobile-nav').classList.remove('mobile-nav__active');
+		document.querySelector('.overlay').classList.remove('overlay_active');
 	}
 
 	return (
@@ -46,6 +48,6 @@ export default function Navigation() {
 					</div>
 				</div>
 			</div>
-			<div className='overlay'></div>
+			<div className='overlay' onClick={menuToggle}></div>
 		</nav>
 	)}

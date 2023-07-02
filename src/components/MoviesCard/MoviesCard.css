@@ -67,7 +67,7 @@
 }
 
 .movies-card:hover .movies-card__image {
-    filter: brightness(130%);
+    filter: brightness(110%);
 }
 
 .movies-card__like-button:hover {
@@ -75,10 +75,6 @@
 }
 
 @media screen and (max-width: 769px) {
-    .movies-card {
-
-    }
-
     .movies-card__image {
         height: 190px;
     }
