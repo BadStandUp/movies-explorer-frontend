@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 export default function Profile() {
 	return (
 		<>
-			<Header />
+			<Header loggedIn={true}/>
 			<main className='profile'>
 				<div className='profile__container'>
 					<h1 className='profile__heading'>Привет, User!</h1>

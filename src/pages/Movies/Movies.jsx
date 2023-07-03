@@ -6,7 +6,7 @@ import MoviesCardList from "../../components/MoviesCardList/MoviesCardList";
 export default function Movies() {
 	return (
 		<>
-			<Header />
+			<Header loggedIn={true}/>
 			<main className='movies'>
 				<SearchForm />
 				<MoviesCardList />
