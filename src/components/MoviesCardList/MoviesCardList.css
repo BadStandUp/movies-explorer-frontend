@@ -30,6 +30,10 @@
     opacity: 0.8;
 }
 
+.movies-card-list__more:active {
+    transform: translateY(4px);
+}
+
 @media screen and (max-width: 769px) {
     .movies-card-list {
         margin: 0 30px;

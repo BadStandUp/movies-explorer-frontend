@@ -63,6 +63,10 @@
     text-align: center;
 }
 
+.navigation__link_button:active {
+    transform: translateY(4px);
+}
+
 .navigation__link-account {
     display: flex;
     justify-content: space-between;
@@ -117,6 +121,10 @@
 
 .burger-menu:hover {
     opacity: 0.7;
+}
+
+.burger-menu:active {
+    transform: translateY(4px);
 }
 
 .mobile-nav {
@@ -244,6 +252,10 @@
 
 .mobile-nav__quit-button:hover {
     opacity: 0.7;
+}
+
+.mobile-nav__quit-button:active {
+    transform: translateY(4px);
 }
 
 .mobile-nav__active {

@@ -26,6 +26,10 @@
     opacity: 0.7;
 }
 
+.register__logo-link:active {
+    transform: translateY(4px);
+}
+
 .register__heading {
     font-size: 24px;
     font-weight: 500;
@@ -69,7 +73,7 @@
 }
 
 .register__form-input:hover {
-    outline: 2px solid #A0A0A0;
+    outline: 1px solid #A0A0A0;
 }
 
 .register__form-input:focus:hover {
@@ -99,6 +103,10 @@
 
 .register__form-submit:hover {
     opacity: 0.8;
+}
+
+.register__form-submit:active {
+    transform: translateY(4px);
 }
 
 .register__text {

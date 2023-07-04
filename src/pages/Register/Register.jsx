@@ -15,8 +15,12 @@ export default function Register() {
 						<input
 							type="text"
 							name="name"
+							placeholder=' '
 							className='register__form-input'
 							required
+							minLength='2'
+							maxLength='30'
+							aria-label='Имя'
 						/>
 					</label>
 					<label className='register__form-label'>
@@ -24,8 +28,12 @@ export default function Register() {
 						<input
 							type="email"
 							name="email"
+							placeholder=' '
 							className='register__form-input'
 							required
+							minLength='2'
+							maxLength='30'
+							aria-label='E-mail'
 						/>
 					</label>
 					<label className='register__form-label'>
@@ -33,8 +41,12 @@ export default function Register() {
 						<input
 							type="password"
 							name="password"
+							placeholder=' '
 							className='register__form-input'
 							required
+							minLength='8'
+							maxLength='30'
+							aria-label='Пароль'
 						/>
 					</label>
 					<span className='register__form-error'>Что-то пошло не так...</span>

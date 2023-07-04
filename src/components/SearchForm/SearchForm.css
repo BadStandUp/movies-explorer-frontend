@@ -44,7 +44,6 @@
 
 .search-form__input:focus {
     outline: none;
-
 }
 
 .search-form__input:focus::placeholder {
@@ -73,6 +72,10 @@
 
 .search-form__button:hover {
     opacity: 0.8;
+}
+
+.search-form__button:active {
+    transform: translateY(-40%);
 }
 
 .search-form__switch {

@@ -47,6 +47,8 @@ export default function Navigation({ loggedIn }) {
 								 className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Войти</NavLink>
 					</div>}
 					{loggedIn && <div className='mobile-nav__bar'>
+						<NavLink to='/' onClick={linkClick}
+								 className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Главная</NavLink>
 						<NavLink to='/movies' onClick={linkClick}
 								 className={({isActive}) => `mobile-nav__link ${isActive ? "mobile-nav__link_active" : ""}`}>Фильмы</NavLink>
 						<NavLink to='/saved-movies' onClick={linkClick}

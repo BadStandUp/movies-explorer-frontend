@@ -34,6 +34,10 @@
     transform: translate(-2px, -2px);
 }
 
+.portfolio__link:active {
+    transform: translateY(4px);
+}
+
 @media screen and (max-width: 769px) {
     .portfolio {
         margin: 0 50px 90px;
