@@ -1,0 +1,221 @@
+.search-form {
+    display: flex;
+    flex-direction: row;
+    padding: 144px 0 69px 0;
+    margin: 0 70px;
+    border-bottom: 1px solid #E8E8E8;
+
+}
+
+.search-form__search-bar {
+    display: flex;
+    position: relative;
+    margin: 0;
+    width: 100%;
+}
+
+.search-form__icon {
+    position: absolute;
+    left: 19px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    color: white;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.search-form__input {
+    display: inline;
+    width: 100%;
+    height: 48px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 17px;
+    color: black;
+    border: none;
+    border-radius: 9px 0 0 9px;
+    background-color: #F5F5F5;
+    padding: 12px 108px 12px 63px;
+    text-overflow: ellipsis;
+}
+
+.search-form__input:focus {
+    outline: none;
+}
+
+.search-form__input:focus::placeholder {
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+.search-form__button {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 20px;
+    width: 58px;
+    height: 34px;
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.search-form__button:hover {
+    opacity: 0.8;
+}
+
+.search-form__button:active {
+    transform: translateY(-40%);
+}
+
+.search-form__switch {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F5F5F5;
+    border-radius: 0 9px 9px 0;
+    padding: 0 30px;
+
+}
+
+.search-form__switch:before {
+    border-left: 1px solid #E8E8E8;
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 50px;
+    width: 50%;
+}
+
+.search-form__heading {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0 0 0 14px;
+}
+
+.search-form__switch-container {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    transition: 0.3s ease;
+}
+
+.search-form__switch-input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.search-form__switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.search-form__switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.search-form__switch-input:checked + .search-form__switch-slider {
+    background-color: #2BE080;
+}
+
+.search-form__switch-input:checked + .search-form__switch-slider:before {
+    transform: translateX(16px);
+}
+
+.search-form__switch-container:hover {
+    opacity: 0.7;
+}
+
+@media screen and (max-width: 769px) {
+    .search-form {
+        padding: 154px 0 109px;
+        margin: 0 30px;
+    }
+
+    .search-form__input {
+        padding-right: 94px;
+    }
+
+    .search-form__switch {
+        padding: 0 20px;
+    }
+
+    .search-form__button {
+        right: 20px;
+    }
+}
+
+@media screen and (max-width: 584px) {
+    .search-form {
+        padding: 154px 0 44px;
+        flex-direction: column;
+    }
+
+    .search-form__input {
+        border-radius: 9px;
+    }
+
+    .search-form__switch {
+        margin: 44px auto 0;
+        background-color: transparent;
+        border-radius: 0;
+        padding: 0;
+        border-left: none;
+    }
+
+    .search-form__switch:before {
+        content: none;
+    }
+}
+
+@media screen and (max-width: 431px) {
+    .search-form {
+        margin: 0 10px;
+    }
+
+    .search-form__input {
+        padding: 12px 94px 12px 19px;
+    }
+
+    .search-form__heading {
+        font-size: 11px;
+    }
+
+    .search-form__icon {
+        display: none;
+    }
+
+    .search-form__button {
+        right: 19px;
+    }
+}

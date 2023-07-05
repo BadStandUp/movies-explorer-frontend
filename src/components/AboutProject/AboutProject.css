@@ -1,0 +1,197 @@
+.about-project {
+    display: flex;
+    flex-direction: column;
+    padding-top: 110px;
+}
+
+.about-project__heading {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 27px;
+    margin: 0 auto 23px 70px;
+}
+
+.about-project__container {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px black solid;
+    margin: 0 70px;
+}
+
+.about-project__description {
+    display: flex;
+    justify-content: space-between;
+    margin: 70px 0 0;
+}
+
+.about-project__description-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 550px;
+    width: 100%;
+    margin-right: 30px;
+}
+
+.about-project__description-container:last-of-type {
+    margin-right: 0;
+}
+
+.about-project__description-heading {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+}
+
+.about-project__description-text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 26px auto 0 0;
+}
+
+.about_project__graph {
+    display: flex;
+    flex-direction: column;
+    margin: 110px 0;
+    cursor: default;
+}
+
+.about_project__graph-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+
+.about_project__graph-progress {
+    width: 20%;
+    background-color: black;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0 auto;
+    padding: 9px 0;
+    color: white;
+}
+
+.about_project__graph-progress:hover {
+    transition: .1s ease;
+    transform: scale(102%);
+    opacity: 0.7;
+}
+
+.about_project__graph-empty {
+    width: 80%;
+    background-color: #F2F2F2;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0 auto;
+    padding: 9px 0;
+}
+
+.about_project__graph-empty:hover {
+    transition: .1s ease;
+    opacity: 0.7;
+}
+
+.about_project__graph-description {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.about_project__graph-description-frontend {
+    width: 20%;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    color: #A0A0A0;
+    text-align: center;
+    margin: 0 auto;
+    padding: 9px 0;
+}
+
+.about_project__graph-description-backend {
+    width: 80%;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    color: #A0A0A0;
+    text-align: center;
+    margin: 0 auto;
+    padding: 9px 0;
+}
+
+@media screen and (max-width: 769px) {
+    .about-project {
+        padding-top: 90px;
+    }
+
+    .about-project__heading {
+        margin: 0 auto 23px 50px;
+    }
+
+    .about-project__container {
+        margin: 0 50px;
+    }
+
+    .about-project__description-text {
+        font-size: 12px;
+        margin: 22px auto 0 0;
+    }
+
+    .about_project__graph {
+        margin: 93px 0;
+    }
+}
+
+@media screen and (max-width: 431px) {
+    .about-project__heading {
+        font-size: 18px;
+        margin: 0 auto 18px 28px;
+    }
+
+    .about-project__container {
+        margin: 0 18px;
+    }
+
+    .about-project__description {
+        flex-direction: column;
+        margin: 60px 0 0;
+
+    }
+
+    .about-project__description-container {
+        margin: 56px 0 0;
+    }
+
+    .about-project__description-container:first-of-type {
+        margin-top: 0;
+    }
+
+    .about-project__description-text {
+        margin-top: 16px;
+    }
+
+    .about_project__graph {
+        margin: 60px 0 69px;
+    }
+
+    .about_project__graph-progress {
+        font-size: 11px;
+    }
+
+    .about_project__graph-empty {
+        font-size: 11px;
+    }
+
+    .about_project__graph-description-frontend {
+        font-size: 11px;
+    }
+
+    .about_project__graph-description-backend {
+        font-size: 11px;
+    }
+}

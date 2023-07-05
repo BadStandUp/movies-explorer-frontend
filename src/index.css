@@ -1,0 +1,25 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+}
+
+body::-webkit-scrollbar {
+    width: .5em;
+    transition: .1s ease;
+}
+
+body::-webkit-scrollbar-track {
+    background: #E8E8E8;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #A0A0A0;
+}
