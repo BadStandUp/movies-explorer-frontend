@@ -1,7 +1,7 @@
-import './MoviesCard.css';
+import './MovieCard.css';
 import moviePreview from '../../images/movie_preview.png'
 
-export default function MoviesCard() {
+export default function MovieCard({ movie }) {
 	const toggleLike = (e) => {
 		e.target.classList.toggle('movies-card__like-button_active')
 	}
@@ -10,7 +10,7 @@ export default function MoviesCard() {
 		<article className="movies-card">
 			<img src={moviePreview} alt="" className='movies-card__image' />
 			<div className='movies-card__container'>
-				<h3 className="movies-card__title">Название фильма</h3>
+				<h3 className="movies-card__title">{movie.nameRU}</h3>
 				<button className="movies-card__like-button" onClick={toggleLike}></button>
 			</div>
 			<span className="movies-card__duration">1ч 42м</span>

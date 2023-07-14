@@ -1,7 +1,25 @@
 import {NavLink} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Login.css';
-export default function Login() {
+import {useState, useCallback} from 'react';
+
+export default function Login({handleLoginSubmit}) {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		handleLoginSubmit(email, password);
+	}
+
+	const handleEmailChange = useCallback((e) => {
+		setEmail(e.target.value);
+	}, []);
+
+	const handlePasswordChange = useCallback((e) => {
+		setPassword(e.target.value);
+	}, []);
+
 	return (
 		<main className='login'>
 			<div className='login__container'>
@@ -9,7 +27,7 @@ export default function Login() {
 					<img src={logo} alt="Лого" className='login__logo'/>
 				</NavLink>
 				<h1 className='login__heading'>Рады видеть!</h1>
-				<form className='login__form'>
+				<form className='login__form' onSubmit={handleSubmit}>
 					<label className='login__form-label'>
 						<span className='login__form-text'>E-mail</span>
 						<input
@@ -21,6 +39,9 @@ export default function Login() {
 							minLength='2'
 							maxLength='30'
 							aria-label='E-mail'
+							autoComplete='username'
+							value={email || ''}
+							onChange={handleEmailChange}
 						/>
 					</label>
 					<label className='login__form-label'>
@@ -34,6 +55,9 @@ export default function Login() {
 							minLength='8'
 							maxLength='30'
 							aria-label='Пароль'
+							autoComplete='current-password'
+							value={password || ''}
+							onChange={handlePasswordChange}
 						/>
 					</label>
 					<span className='login__form-error'>Что-то пошло не так...</span>

@@ -1,7 +1,30 @@
 import {NavLink} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Register.css';
-export default function Register() {
+import {useCallback, useState} from 'react';
+
+export default function Register({ handleRegisterSubmit }) {
+	const [name, setName] = useState('')
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		handleRegisterSubmit(name, email, password)
+	}
+
+	const handleNameChange = useCallback((e) => {
+		setName(e.target.value);
+	}, []);
+
+	const handleEmailChange = useCallback((e) => {
+		setEmail(e.target.value);
+	}, []);
+
+	const handlePasswordChange = useCallback((e) => {
+		setPassword(e.target.value);
+	}, []);
+
 	return (
 		<main className='register'>
 			<div className='register__container'>
@@ -9,7 +32,7 @@ export default function Register() {
 					<img src={logo} alt="Лого" className='register__logo'/>
 				</NavLink>
 				<h1 className='register__heading'>Добро пожаловать!</h1>
-				<form className='register__form'>
+				<form className='register__form' onSubmit={handleSubmit}>
 					<label className='register__form-label'>
 						<span className='register__form-text'>Имя</span>
 						<input
@@ -21,6 +44,9 @@ export default function Register() {
 							minLength='2'
 							maxLength='30'
 							aria-label='Имя'
+							autoComplete='first-name'
+							value={name || ''}
+							onChange={handleNameChange}
 						/>
 					</label>
 					<label className='register__form-label'>
@@ -34,6 +60,9 @@ export default function Register() {
 							minLength='2'
 							maxLength='30'
 							aria-label='E-mail'
+							autoComplete='username'
+							value={email || ''}
+							onChange={handleEmailChange}
 						/>
 					</label>
 					<label className='register__form-label'>
@@ -47,6 +76,9 @@ export default function Register() {
 							minLength='8'
 							maxLength='30'
 							aria-label='Пароль'
+							autoComplete='new-password'
+							value={password || ''}
+							onChange={handlePasswordChange}
 						/>
 					</label>
 					<span className='register__form-error'>Что-то пошло не так...</span>
