@@ -5,7 +5,7 @@
 
 Домен: https://kino.nomoredomains.rocks
 
-[Ссылка на пулреквест]()
+[Ссылка на пулреквест](https://github.com/BadStandUp/movies-explorer-frontend/pull/2)
 
 [Ссылка на макет](https://disk.yandex.ru/d/oRkXCdqHwY8P7A)
 
