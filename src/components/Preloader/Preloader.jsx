@@ -1,6 +1,16 @@
 import './Preloader.css'
+import {useEffect} from 'react';
 
-const Preloader = () => {
+const Preloader = ({fullScreen}) => {
+
+    useEffect(() => {
+        if (fullScreen) {
+            document.querySelector(".preloader").classList.add('preloader_full-screen');
+        } else {
+            document.querySelector(".preloader").classList.remove('preloader_full-screen');
+        }
+    })
+
     return (
         <div className="preloader">
             <div className="preloader__container">

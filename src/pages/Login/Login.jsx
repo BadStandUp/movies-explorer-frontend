@@ -2,23 +2,43 @@ import {NavLink} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Login.css';
 import {useState, useCallback} from 'react';
+import { isEmail } from 'validator';
 
-export default function Login({handleLoginSubmit}) {
+export default function Login({ handleLoginSubmit }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		handleLoginSubmit(email, password);
-	}
+	const [error, setError] = useState('');
 
 	const handleEmailChange = useCallback((e) => {
 		setEmail(e.target.value);
+		if (e.target.value.trim() === '') {
+			setError('Поле должно быть заполнено');
+		} else if (!isEmail(e.target.value)) {
+			setError('Некорректный формат электронной почты');
+		} else {
+			setError('');
+		}
 	}, []);
 
 	const handlePasswordChange = useCallback((e) => {
 		setPassword(e.target.value);
+		if (e.target.value.trim() === '') {
+			setError('Поле должно быть заполнено');
+		} else if (e.target.value.length < 8) {
+			setError('Не менее 8 символов');
+		} else {
+			setError('');
+		}
 	}, []);
+
+	const isFormValid = !!(email && password && !error);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (isFormValid) {
+			handleLoginSubmit(email, password);
+		}
+	};
 
 	return (
 		<main className='login'>
@@ -27,7 +47,7 @@ export default function Login({handleLoginSubmit}) {
 					<img src={logo} alt="Лого" className='login__logo'/>
 				</NavLink>
 				<h1 className='login__heading'>Рады видеть!</h1>
-				<form className='login__form' onSubmit={handleSubmit}>
+				<form className='login__form' onSubmit={handleSubmit} name='loginForm'>
 					<label className='login__form-label'>
 						<span className='login__form-text'>E-mail</span>
 						<input
@@ -40,7 +60,7 @@ export default function Login({handleLoginSubmit}) {
 							maxLength='30'
 							aria-label='E-mail'
 							autoComplete='username'
-							value={email || ''}
+							value={email}
 							onChange={handleEmailChange}
 						/>
 					</label>
@@ -56,12 +76,18 @@ export default function Login({handleLoginSubmit}) {
 							maxLength='30'
 							aria-label='Пароль'
 							autoComplete='current-password'
-							value={password || ''}
+							value={password}
 							onChange={handlePasswordChange}
 						/>
 					</label>
-					<span className='login__form-error'>Что-то пошло не так...</span>
-					<button type="submit" className='login__form-submit'>Войти</button>
+					<span className='login__form-error'>{error}</span>
+					<button
+						type="submit"
+						className={`login__form-submit ${!isFormValid ? 'login__form-submit_disabled' : ''}`}
+						disabled={!isFormValid}
+					>
+						Войти
+					</button>
 				</form>
 				<p className='login__text'>Ещё не зарегистрированы?<NavLink to='/signup' className='login__link'> Регистрация</NavLink></p>
 			</div>

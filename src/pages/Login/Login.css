@@ -84,6 +84,7 @@
 }
 
 .login__form-error {
+    height: 12px;
     font-size: 10px;
     font-weight: 400;
     color: #FF004D;
@@ -110,6 +111,11 @@
 
 .login__form-submit:active {
     transform: translateY(4px);
+}
+
+.login__form-submit_disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .login__text {

@@ -7,11 +7,11 @@ import AboutProject from "../../components/AboutProject/AboutProject";
 import Techs from "../../components/Techs/Techs";
 import AboutMe from "../../components/AboutMe/AboutMe";
 
-export default function Main(props) {
+export default function Main() {
 
     return (
         <>
-            <Header loggedIn={props.loggedIn}/>
+            <Header/>
             <main className='main'>
                 <Promo />
                 <NavTab />

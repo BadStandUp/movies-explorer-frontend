@@ -1,50 +1,74 @@
-const BASE_URL = '//localhost:3000';
+const BASE_URL = 'http://localhost:3000';
 
-function getResponse(res) {
-    if (!res.ok) {
-        return Promise.reject(res.status)
-    }
-    return res.json()
-}
-
-export const signup = (name, email, password) => {
-    return fetch(`${BASE_URL}/signup`, {
-        method: `POST`,
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, password, email }),
-    }).then((res) => getResponse(res));
-};
-
-export const signin = (email, password) => {
-    return fetch(`${BASE_URL}/signin`, {
-        method: `POST`,
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ password, email }),
-    })
-        .then((res) => getResponse(res))
-        .then((data) => {
-            if (data.token) {
-                localStorage.setItem('jwt', data.token);
-                return data;
-            }
+export const signin = async (email, password) => {
+    try {
+        const response = await fetch(`${BASE_URL}/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
         });
+        if (!response.ok) {
+            return Promise.reject(Error('Login failed'));
+        }
+        const { token } = await response.json();
+        localStorage.setItem('token', token);
+        console.log('Login successful');
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-export const getUser = (token) => {
-    return fetch(`${BASE_URL}/users/me`, {
-        method: `GET`,
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    })
-        .then((res) => getResponse(res))
-        .then((data) => data);
+export const signup = async (name, email, password) => {
+    try {
+        const response = await fetch(`${BASE_URL}/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, password }),
+        });
+        if (!response.ok) {
+            return Promise.reject(Error('Registration failed'));
+        }
+        const { token } = await response.json();
+        localStorage.setItem('token', token);
+        console.log('Registration successful');
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const fetchUserData = async () => {
+    try {
+        return await fetch(`${BASE_URL}/users/me`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const updateProfile = async (name, email) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${BASE_URL}/users/me`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ name, email }),
+        });
+        if (!response.ok) {
+            return Promise.reject(Error('Failed to update profile'));
+        }
+        console.log('Profile updated successfully');
+    } catch (error) {
+        console.error(error);
+    }
 };

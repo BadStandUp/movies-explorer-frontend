@@ -1,8 +1,12 @@
+import {useContext} from 'react';
 import {NavLink} from "react-router-dom";
 import './Navigation.css';
 import account_icon from '../../images/account_icon.svg';
+import {AuthContext} from '../../contexts/AuthContext.js';
 
-export default function Navigation({ loggedIn }) {
+export default function Navigation() {
+	const { loggedIn } = useContext(AuthContext);
+
 	const menuToggle = () => {
 		document.querySelector('.mobile-nav').classList.toggle('mobile-nav__active');
 		document.querySelector('.overlay').classList.toggle('overlay_active');

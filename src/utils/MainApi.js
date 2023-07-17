@@ -1,45 +1,65 @@
-const BASE_URL = '//localhost:3000';
-
-const makePromise = async (url, method, body) => {
-    return await fetch(`${BASE_URL}${url}`, {
-        method,
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('jwt')}`},
-        body,
-    })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        });
-};
+const BASE_URL = 'http://localhost:3000';
 
 export const getMovies = async () => {
-  return await makePromise('/movies', 'GET');
+    try {
+        const response = await fetch(`${BASE_URL}/movies`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+        if (!response.ok) {
+            return Promise.reject(Error('Failed to fetch movies'));
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-export const addMovie = async (data) => {
-    return await makePromise('/movies', 'POST', JSON.stringify({
-      country: `${data.country}`,
-      director: `${data.director}`,
-      duration: `${data.duration}`,
-      year: `${data.year}`,
-      description: `${data.description}`,
-      image: `${data.image}`,
-      trailerLink: `${data.trailerLink}`,
-      thumbnail: `${data.thumbnail}`,
-      movieId: `${data.id}`,
-      nameRU: `${data.nameRU}`,
-      nameEN: `${data.nameEN}`,
-  }));
-}
+export const addMovie = async (movieData) => {
+    try {
+        const response = await fetch(`${BASE_URL}/movies`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({
+                country: movieData.country,
+                director: movieData.director,
+                duration: movieData.duration,
+                year: movieData.year,
+                description: movieData.description,
+                image: `https://api.nomoreparties.co/${movieData.image.url}`,
+                trailerLink: movieData.trailerLink,
+                nameRU: movieData.nameRU,
+                nameEN: movieData.nameEN,
+                thumbnail: `https://api.nomoreparties.co/${movieData.image.formats.thumbnail.url}`,
+                movieId: movieData.id,
+            }),
+        });
+        if (!response.ok) {
+            return Promise.reject(Error('Failed to add movie'));
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 export const deleteMovie = async (movieId) => {
-    return await makePromise('/movies' + movieId, 'PATCH')
-}
-
-export const updateUser = async (name, email) => {
-    return await makePromise('/users/me', 'PATCH', JSON.stringify({name, email}));
+    try {
+        const response = await fetch(`${BASE_URL}/movies/${movieId}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+        if (!response.ok) {
+            return Promise.reject(Error('Failed to delete movie'));
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
 };

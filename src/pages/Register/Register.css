@@ -81,6 +81,7 @@
 }
 
 .register__form-error {
+    height: 12px;
     font-size: 10px;
     font-weight: 400;
     color: #FF004D;
@@ -107,6 +108,11 @@
 
 .register__form-submit:active {
     transform: translateY(4px);
+}
+
+.register__form-submit_disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .register__text {

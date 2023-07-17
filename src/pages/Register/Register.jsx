@@ -2,28 +2,54 @@ import {NavLink} from "react-router-dom";
 import logo from "../../images/logo.svg";
 import './Register.css';
 import {useCallback, useState} from 'react';
+import { isEmail } from 'validator';
 
 export default function Register({ handleRegisterSubmit }) {
-	const [name, setName] = useState('')
+	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		handleRegisterSubmit(name, email, password)
-	}
+	const [error, setError] = useState('');
 
 	const handleNameChange = useCallback((e) => {
 		setName(e.target.value);
+		if (e.target.value.trim() === '') {
+			setError('Поле должно быть заполнено');
+		} else {
+			setError('');
+		}
 	}, []);
 
 	const handleEmailChange = useCallback((e) => {
 		setEmail(e.target.value);
+		if (e.target.value.trim() === '') {
+			setError('Поле должно быть заполнено');
+		} else if (!isEmail(e.target.value)) {
+			setError('Некорректный формат электронной почты');
+		} else {
+			setError('');
+		}
 	}, []);
 
 	const handlePasswordChange = useCallback((e) => {
 		setPassword(e.target.value);
+		if (e.target.value.trim() === '') {
+			setError('Поле должно быть заполнено');
+		} else if (e.target.value.length < 8) {
+			setError('Не менее 8 символов');
+		} else {
+			setError('');
+		}
 	}, []);
+
+	const isFormValid = !!(name && email && password && !error);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (isFormValid) {
+			handleRegisterSubmit(name, email, password);
+		}
+	};
 
 	return (
 		<main className='register'>
@@ -32,7 +58,7 @@ export default function Register({ handleRegisterSubmit }) {
 					<img src={logo} alt="Лого" className='register__logo'/>
 				</NavLink>
 				<h1 className='register__heading'>Добро пожаловать!</h1>
-				<form className='register__form' onSubmit={handleSubmit}>
+				<form className='register__form' onSubmit={handleSubmit} name='registerForm'>
 					<label className='register__form-label'>
 						<span className='register__form-text'>Имя</span>
 						<input
@@ -45,7 +71,7 @@ export default function Register({ handleRegisterSubmit }) {
 							maxLength='30'
 							aria-label='Имя'
 							autoComplete='first-name'
-							value={name || ''}
+							value={name}
 							onChange={handleNameChange}
 						/>
 					</label>
@@ -61,7 +87,7 @@ export default function Register({ handleRegisterSubmit }) {
 							maxLength='30'
 							aria-label='E-mail'
 							autoComplete='username'
-							value={email || ''}
+							value={email}
 							onChange={handleEmailChange}
 						/>
 					</label>
@@ -77,12 +103,18 @@ export default function Register({ handleRegisterSubmit }) {
 							maxLength='30'
 							aria-label='Пароль'
 							autoComplete='new-password'
-							value={password || ''}
+							value={password}
 							onChange={handlePasswordChange}
 						/>
 					</label>
-					<span className='register__form-error'>Что-то пошло не так...</span>
-					<button type="submit" className='register__form-submit'>Зарегистрироваться</button>
+					<span className='register__form-error'>{error}</span>
+					<button
+						type="submit"
+						className={`register__form-submit ${!isFormValid ? 'register__form-submit_disabled' : ''}`}
+						disabled={!isFormValid}
+					>
+						Зарегистрироваться
+					</button>
 				</form>
 				<p className='register__text'>Уже зарегистрированы?<NavLink to='/signin' className='register__link'> Войти</NavLink></p>
 			</div>
