@@ -30,7 +30,8 @@ export default function App() {
 
     // Проверка токена
     const checkToken = async () => {
-        try {
+        setIsLoading(true);
+    try {
             const token = localStorage.getItem('token');
             if (!token) {
                 setLoggedIn(false);
@@ -53,6 +54,9 @@ export default function App() {
             setLoggedIn(true);
         } catch (err) {
             console.error(err);
+        } finally {
+            setLoggedIn(true);
+            setIsLoading(false);
         }
     };
     useEffect(() => {
@@ -73,7 +77,7 @@ export default function App() {
         } catch (error) {
             console.error('Registration failed:', error);
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     };
 
