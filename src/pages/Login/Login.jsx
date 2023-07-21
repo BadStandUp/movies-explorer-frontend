@@ -7,31 +7,32 @@ import { isEmail } from 'validator';
 export default function Login({ handleLoginSubmit }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [error, setError] = useState('');
+	const [emailError, setEmailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
 
 	const handleEmailChange = useCallback((e) => {
 		setEmail(e.target.value);
 		if (e.target.value.trim() === '') {
-			setError('Поле должно быть заполнено');
+			setEmailError('Поле должно быть заполнено');
 		} else if (!isEmail(e.target.value)) {
-			setError('Некорректный формат электронной почты');
+			setEmailError('Некорректный формат электронной почты');
 		} else {
-			setError('');
+			setEmailError('');
 		}
 	}, []);
 
 	const handlePasswordChange = useCallback((e) => {
 		setPassword(e.target.value);
 		if (e.target.value.trim() === '') {
-			setError('Поле должно быть заполнено');
+			setPasswordError('Поле должно быть заполнено');
 		} else if (e.target.value.length < 8) {
-			setError('Не менее 8 символов');
+			setPasswordError('Не менее 8 символов');
 		} else {
-			setError('');
+			setPasswordError('');
 		}
 	}, []);
 
-	const isFormValid = !!(email && password && !error);
+	const isFormValid = !!(email && password && !emailError && !passwordError);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -64,6 +65,7 @@ export default function Login({ handleLoginSubmit }) {
 							onChange={handleEmailChange}
 						/>
 					</label>
+					<span className='login__form-error'>{emailError}</span>
 					<label className='login__form-label'>
 						<span className='login__form-text'>Пароль</span>
 						<input
@@ -80,7 +82,7 @@ export default function Login({ handleLoginSubmit }) {
 							onChange={handlePasswordChange}
 						/>
 					</label>
-					<span className='login__form-error'>{error}</span>
+					<span className='login__form-error'>{passwordError}</span>
 					<button
 						type="submit"
 						className={`login__form-submit ${!isFormValid ? 'login__form-submit_disabled' : ''}`}

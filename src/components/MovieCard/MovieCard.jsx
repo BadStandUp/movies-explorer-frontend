@@ -3,51 +3,63 @@ import './MovieCard.css';
 import {SavedMoviesContext} from '../../contexts/SavedMoviesContext.js';
 import * as mainApi from '../../utils/MainApi';
 import {useLocation} from 'react-router';
+import {SHORT_MOVIE_DURATION} from '../../utils/constants.js';
 
-export default function MovieCard({ movie, image }) {
+
+export default function MovieCard({ movie, image, title }) {
 	const location = useLocation();
+
 	const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
+
 	const [isLiked, setIsLiked] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [button, setButton] = useState(false);
-	
+
+	const currentSavedMovie = savedMovies.find((movie) => movie.nameRU === title);
+
 	useEffect(() => {
-		if (location.pathname === '/saved-movies') {
-			setButton(false);
-		} else {
-			setButton(true);
+		if (location.pathname === '/movies' && currentSavedMovie) {
+			setIsLiked(true);
 		}
-	}, []);
-	
-	const addToSavedMovies = (movie) => {
-		setSavedMovies((prevMovies) => [...prevMovies, movie]);
-	};
+	}, [currentSavedMovie]);
 
-	const removeFromSavedMovies = (movieId) => {
-		setSavedMovies((prevMovies) => prevMovies.filter((movie) => movie.id !== movieId));
-	};
+	function handleAddMovie(movie) {
+		mainApi.addMovie(movie)
+			.then((newMovie) => {
+				setSavedMovies([...savedMovies, newMovie]);
+				return savedMovies;
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
-	useEffect(() => {
-		const isMovieSaved = savedMovies.some((savedMovie) => savedMovie.id === movie.id);
-		setIsLiked(isMovieSaved);
-	}, [savedMovies, movie.id]);
+	function handleDeleteMovie(id) {
+		mainApi.deleteMovie(id)
+			.then(() => {
+				setSavedMovies(
+					savedMovies.filter((item) => {
+						return item._id !== id;
+					}),
+				);
+				return savedMovies;
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
-	const handleLikeClick = async () => {
-		setIsLoading(true);
-		try {
-			if (isLiked) {
-				await mainApi.deleteMovie(movie._id);
-				removeFromSavedMovies(movie.id);
-				setIsLiked(false);
-			} else {
-				await mainApi.addMovie(movie);
-				addToSavedMovies(movie);
+	const handleMovie = (e) => {
+		e.preventDefault();
+		if (location.pathname === '/movies') {
+			if (!isLiked) {
 				setIsLiked(true);
+				handleAddMovie(movie)
+			} else {
+				setIsLiked(false);
+				handleDeleteMovie(currentSavedMovie._id);
 			}
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setIsLoading(false);
+		}
+		if (location.pathname === '/saved-movies') {
+			handleDeleteMovie(movie._id);
 		}
 	};
 
@@ -61,8 +73,8 @@ export default function MovieCard({ movie, image }) {
 	};
 
 	const formatDuration = (minutes) => {
-		const hours = Math.floor(minutes / 60);
-		const mins = minutes % 60;
+		const hours = Math.floor(minutes / SHORT_MOVIE_DURATION);
+		const mins = minutes % SHORT_MOVIE_DURATION;
 		return `${hours}ч ${mins}м`;
 	};
 
@@ -70,16 +82,20 @@ export default function MovieCard({ movie, image }) {
 		<article className="movies-card">
 			<img
 				src={image}
-				alt={movie.nameRU}
+				alt={title}
 				className='movies-card__image'
 				onClick={handleOpenInNewTab}
 			/>
 			<div className='movies-card__container'>
-				<h3 className="movies-card__title" title={movie.nameRU}>{movie.nameRU}</h3>
+				<h3 className="movies-card__title" title={title}>{title}</h3>
 				<button
-					className={`${button ? 'movies-card__like-button' : 'movies-card__delete-button'} ${button && isLiked ? 'movies-card__like-button_active' : ''}`}
-					onClick={handleLikeClick}
-					disabled={isLoading}
+					type='button'
+					className={`movies-card__like-button ${
+						location.pathname === '/movies'
+							? `'' ${isLiked ? 'movies-card__like-button_active' : ''}`
+							: 'movies-card__delete-button'
+					}`}
+					onClick={handleMovie}
 				></button>
 			</div>
 			<span className="movies-card__duration">{formatDuration(movie.duration)}</span>

@@ -2,14 +2,21 @@ import './MovieList.css'
 import MovieCard from "../MovieCard/MovieCard.jsx";
 import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router';
+import {
+	DESKTOP_WIDTH,
+	MOVIES_MORE_DESKTOP,
+	MOVIES_MORE_MOBILE,
+	MOVIES_MORE_TABLET, MOVIES_SHOWN_MOBILE,
+	TABLET_WIDTH
+} from '../../utils/constants.js';
 
 export default function MovieList({ movies }) {
 	const location = useLocation();
 
 	const [showElements, setShowElements] = useState(true)
-	const [visibleMovies, setVisibleMovies] = useState(0);
-	const [cardsPerRow, setCardsPerRow] = useState(0);
-	const [loadMoreCount, setLoadMoreCount] = useState(0);
+	const [cardsPerRow, setCardsPerRow] = useState(3);
+	const [loadMoreCount, setLoadMoreCount] = useState(3);
+	const [visibleMovies, setVisibleMovies] = useState(cardsPerRow * 4);
 
 	const foundMovies = JSON.parse(localStorage.getItem('filteredMovies'));
 
@@ -31,21 +38,23 @@ export default function MovieList({ movies }) {
 				let newLoadMoreCount;
 
 				switch (true) {
-					case screenWidth >= 1280:
-						newCardsPerRow = 3;
-						newLoadMoreCount = 3;
+					case screenWidth >= DESKTOP_WIDTH:
+						newCardsPerRow = MOVIES_MORE_DESKTOP;
+						newLoadMoreCount = MOVIES_MORE_DESKTOP;
 						break;
-					case screenWidth >= 768:
-						newCardsPerRow = 2;
-						newLoadMoreCount = 2;
+					case screenWidth >= TABLET_WIDTH:
+						newCardsPerRow = MOVIES_MORE_TABLET;
+						newLoadMoreCount = MOVIES_MORE_TABLET;
 						break;
 					default:
-						newCardsPerRow = 1;
-						newLoadMoreCount = 2;
+						newCardsPerRow = MOVIES_MORE_MOBILE;
+						newLoadMoreCount = MOVIES_MORE_TABLET;
+						break;
 				}
 
 				setCardsPerRow(newCardsPerRow);
 				setLoadMoreCount(newLoadMoreCount);
+				setVisibleMovies(newCardsPerRow * MOVIES_SHOWN_MOBILE);
 			}, 500);
 		};
 
@@ -57,10 +66,6 @@ export default function MovieList({ movies }) {
 			clearTimeout(resizeTimer);
 		};
 	}, []);
-
-	useEffect(() => {
-		setVisibleMovies(cardsPerRow);
-	}, [cardsPerRow]);
 
 	const handleLoadMore = () => {
 		setVisibleMovies(prevVisibleMovies => prevVisibleMovies + loadMoreCount);
@@ -75,10 +80,11 @@ export default function MovieList({ movies }) {
 							key={foundMovie.id}
 							movie={foundMovie}
 							image={`https://api.nomoreparties.co/${foundMovie.image.url}`}
+							title={foundMovie.nameRU}
 						/>
 					))
 					: movies.slice(0, visibleMovies).map(movie => (
-						<MovieCard key={movie._id} movie={movie} image={movie.image} />
+						<MovieCard key={movie._id} movie={movie} image={movie.image} title={movie.nameRU}/>
 					))}
 			</div>
 			{showElements && visibleMovies < (foundMovies || movies).length && (

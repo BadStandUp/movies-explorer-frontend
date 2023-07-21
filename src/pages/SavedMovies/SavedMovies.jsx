@@ -7,6 +7,7 @@ import MovieList from "../../components/MovieList/MovieList.jsx";
 import Preloader from '../../components/Preloader/Preloader.jsx';
 import * as mainApi from '../../utils/MainApi';
 import {SavedMoviesContext} from '../../contexts/SavedMoviesContext.js';
+import {SHORT_MOVIE_DURATION} from '../../utils/constants.js';
 
 export default function SavedMovies() {
 	const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
@@ -18,6 +19,23 @@ export default function SavedMovies() {
 	useEffect(() => {
 		fetchSavedMovies();
 	}, []);
+
+	useEffect(() => {
+		const searchQuery = localStorage.getItem('search');
+		if (!isSwitched) {
+			const filtered = savedMovies.filter((movie) =>
+				movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase())
+			);
+			setFilteredMovies(filtered);
+		} else {
+			const filteredWithSwitch = savedMovies.filter(
+				(movie) =>
+					movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase()) &&
+					movie.duration <= SHORT_MOVIE_DURATION
+			);
+			setFilteredMovies(filteredWithSwitch);
+		}
+	}, [savedMovies, isSwitched]);
 
 	const fetchSavedMovies = () => {
 		setIsLoading(true);
@@ -39,7 +57,7 @@ export default function SavedMovies() {
 	const handleFilter = useCallback(
 		() => {
 			const searchQuery = localStorage.getItem('search');
-			if (!isSwitched) {
+			if (isSwitched) {
 				const filtered = savedMovies.filter((movie) =>
 					movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase())
 				);
@@ -48,7 +66,7 @@ export default function SavedMovies() {
 				const filteredWithSwitch = savedMovies.filter(
 					(movie) =>
 						movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase()) &&
-						movie.duration <= 60
+						movie.duration <= SHORT_MOVIE_DURATION
 				);
 				setFilteredMovies(filteredWithSwitch);
 			}
@@ -81,7 +99,7 @@ export default function SavedMovies() {
 						{filteredMovies.length === 0 ? (
 							<p className='saved-movies__loading'>Ничего не найдено</p>
 						) : (
-							<MovieList movies={filteredMovies}/>
+							<MovieList movies={filteredMovies} />
 						)}
 					</>
 				)}

@@ -8,41 +8,42 @@ export default function Register({ handleRegisterSubmit }) {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-
-	const [error, setError] = useState('');
+	const [nameError, setNameError] = useState('');
+	const [emailError, setEmailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
 
 	const handleNameChange = useCallback((e) => {
 		setName(e.target.value);
 		if (e.target.value.trim() === '') {
-			setError('Поле должно быть заполнено');
+			setNameError('Поле должно быть заполнено');
 		} else {
-			setError('');
+			setNameError('');
 		}
 	}, []);
 
 	const handleEmailChange = useCallback((e) => {
 		setEmail(e.target.value);
 		if (e.target.value.trim() === '') {
-			setError('Поле должно быть заполнено');
+			setEmailError('Поле должно быть заполнено');
 		} else if (!isEmail(e.target.value)) {
-			setError('Некорректный формат электронной почты');
+			setEmailError('Некорректный формат электронной почты');
 		} else {
-			setError('');
+			setEmailError('');
 		}
 	}, []);
 
 	const handlePasswordChange = useCallback((e) => {
 		setPassword(e.target.value);
 		if (e.target.value.trim() === '') {
-			setError('Поле должно быть заполнено');
+			setPasswordError('Поле должно быть заполнено');
 		} else if (e.target.value.length < 8) {
-			setError('Не менее 8 символов');
+			setPasswordError('Не менее 8 символов');
 		} else {
-			setError('');
+			setPasswordError('');
 		}
 	}, []);
 
-	const isFormValid = !!(name && email && password && !error);
+	const isFormValid = !!(name && email && password && !nameError && !emailError && !passwordError );
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -75,6 +76,7 @@ export default function Register({ handleRegisterSubmit }) {
 							onChange={handleNameChange}
 						/>
 					</label>
+					<span className='register__form-error'>{nameError}</span>
 					<label className='register__form-label'>
 						<span className='register__form-text'>E-mail</span>
 						<input
@@ -91,6 +93,7 @@ export default function Register({ handleRegisterSubmit }) {
 							onChange={handleEmailChange}
 						/>
 					</label>
+					<span className='register__form-error'>{emailError}</span>
 					<label className='register__form-label'>
 						<span className='register__form-text'>Пароль</span>
 						<input
@@ -107,7 +110,7 @@ export default function Register({ handleRegisterSubmit }) {
 							onChange={handlePasswordChange}
 						/>
 					</label>
-					<span className='register__form-error'>{error}</span>
+					<span className='register__form-error'>{passwordError}</span>
 					<button
 						type="submit"
 						className={`register__form-submit ${!isFormValid ? 'register__form-submit_disabled' : ''}`}

@@ -1,11 +1,9 @@
-import {useContext} from 'react';
-import {Navigate, Outlet} from 'react-router';
-import {AuthContext} from '../../contexts/AuthContext.js';
+import {Navigate} from 'react-router';
 
-export default function ProtectedRoute() {
-	const { loggedIn } = useContext(AuthContext);
+export default function ProtectedRoute({ children }) {
 
-	return (
-		loggedIn ? <Outlet /> : <Navigate to='/signin'/>
-	)
+	if (localStorage.getItem('jwt')) {
+		return <Navigate to='/' />;
+	}
+	return children;
 }
