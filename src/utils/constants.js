@@ -1,8 +1,8 @@
 export const SHORT_MOVIE_DURATION = 40;
 
 export const DESKTOP_WIDTH = 1280;
-export const TABLET_WIDTH = 768;
-export const MOBILE_WIDTH = 480;
+export const TABLET_WIDTH = 997;
+export const MOBILE_WIDTH = 627;
 
 export const MOVIES_SHOWN_FULL = 12;
 export const MOVIES_SHOWN_DESKTOP = 9;

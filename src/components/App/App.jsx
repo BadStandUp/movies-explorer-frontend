@@ -15,7 +15,6 @@ import Popup from '../UI/Popup/Popup.jsx';
 
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import {AuthContext} from '../../contexts/AuthContext.js';
-import {SavedMoviesContext} from '../../contexts/SavedMoviesContext.js';
 import * as authApi from '../../utils/AuthApi';
 import * as mainApi from '../../utils/MainApi.js';
 
@@ -34,12 +33,11 @@ export default function App() {
 
     const loggedInMemo = useMemo(() => ({loggedIn, setLoggedIn}), [loggedIn]);
     const currentUserMemo = useMemo(() => ({currentUser, setCurrentUser}), [currentUser]);
-    const savedMoviesMemo = useMemo(() => ({ savedMovies, setSavedMovies }), [savedMovies]);
 
     // Проверка токена
     const checkToken = async () => {
         setIsLoading(true);
-    try {
+        try {
             const token = localStorage.getItem('token');
             if (!token) {
                 setLoggedIn(false);
@@ -143,7 +141,9 @@ export default function App() {
         navigate('/', {replace: true});
         setLoggedIn(false);
         setCurrentUser({});
+        setMovies([]);
         setSavedMovies([]);
+        setSavedResultMovies([]);
         setPopupMessage('Вы успешно вышли.');
         setPopupError(false);
         setShowPopup(true);
@@ -153,7 +153,6 @@ export default function App() {
     };
 
     // Фильмы
-
     function handleAddMovie(movie) {
         mainApi.addMovie(movie)
             .then((newMovie) => {
@@ -180,17 +179,48 @@ export default function App() {
             });
     }
 
+    useEffect(() => {
+        if (loggedIn) {
+            mainApi.getMovies()
+                .then((data) => {
+                    setSavedMovies(data);
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+        }
+    }, [loggedIn]);
+
   return (
     <div className="App">
         <div className='App__content'>
             <CurrentUserContext.Provider value={currentUserMemo}>
                 <AuthContext.Provider value={loggedInMemo}>
-                    <SavedMoviesContext.Provider value={savedMoviesMemo}>
+
                         {isLoading ? (<Preloader fullScreen={true}/>) : ''}
                         <Routes>
                             <Route exact path="/profile" element={<ProtectedRoute><Profile handleLogout={handleLogout}/></ProtectedRoute>}/>
-                            <Route exact path="/movies" element={<ProtectedRoute><Movies /></ProtectedRoute>}/>
-                            <Route exact path="/saved-movies" element={<ProtectedRoute><SavedMovies /></ProtectedRoute>}/>
+                            <Route exact path="/movies" element={
+                                <ProtectedRoute>
+                                    <Movies
+                                        movies={movies}
+                                        setMovies={setMovies}
+                                        savedMovies={savedMovies}
+                                        savedResultMovies={savedResultMovies}
+                                        handleAddMovie={handleAddMovie}
+                                        handleDeleteMovie={handleDeleteMovie}
+                                    />
+                                </ProtectedRoute>}/>
+                            <Route exact path="/saved-movies" element={
+                                <ProtectedRoute>
+                                    <SavedMovies
+                                        savedMovies={savedMovies}
+                                        savedResultMovies={savedResultMovies}
+                                        setSavedResultMovies={setSavedResultMovies}
+                                        handleAddMovie={handleAddMovie}
+                                        handleDeleteMovie={handleDeleteMovie}
+                                    />
+                                </ProtectedRoute>}/>
                             <Route path="/" element={<Main />}/>
                             <Route path="/signup" element={<GuestRoute><Register handleRegisterSubmit={handleRegisterSubmit}/></GuestRoute>}/>
                             <Route path="/signin" element={<GuestRoute><Login handleLoginSubmit={handleLoginSubmit}/></GuestRoute>}/>
@@ -199,7 +229,7 @@ export default function App() {
                         {showPopup && (
                             <Popup message={popupMessage} error={popupError} />
                         )}
-                    </SavedMoviesContext.Provider>
+
                 </AuthContext.Provider>
             </CurrentUserContext.Provider>
         </div>

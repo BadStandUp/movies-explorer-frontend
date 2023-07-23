@@ -8,18 +8,29 @@ import Preloader from '../../components/Preloader/Preloader.jsx';
 import * as moviesApi from '../../utils/MoviesApi';
 import {SHORT_MOVIE_DURATION} from '../../utils/constants.js';
 
-export default function Movies() {
+export default function Movies({
+								   setMovies,
+								   handleAddMovie,
+								   handleDeleteMovie,
+								   savedMovies,
+								   savedResultMovies,
+								   savedRequest,
+								   setSavedRequest,
+								   getSavedMovies
+}) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
 	const isSwitched = localStorage.getItem('switch');
 	const [switched, setSwitched] = useState(false);
-
+	const [buttonShown, setButtonShown] = useState(false);
+	const [moviesShown, setMoviesShown] = useState();
 
 	const fetchMovies = () => {
 		setIsLoading(true);
 		setError('');
 		moviesApi.fetchMoviesData()
 			.then((fetchedMovies) => {
+				setMovies(fetchedMovies);
 				localStorage.setItem('movies', JSON.stringify(fetchedMovies));
 			})
 			.then(() => {
@@ -61,31 +72,46 @@ export default function Movies() {
 
 	const foundMovies = JSON.parse(localStorage.getItem('filteredMovies'));
 
-	const handleSubmitMovies = (input) => {
+	function handleSubmitMovies(input) {
 		localStorage.setItem('search', input);
 		fetchMovies();
-	};
+	}
 
 	return (
 		<>
 			<Header/>
 			<main className="movies">
-				<SearchForm onSubmit={handleSubmitMovies} switched={switched} setSwitched={setSwitched} handleClick={handleFilter}/>
+				<SearchForm
+					onSubmit={handleSubmitMovies}
+					switched={switched}
+					setSwitched={setSwitched}
+					handleClick={handleFilter}
+				/>
 				{isLoading ? (
 					<>
 						<Preloader fullScreen={false} />
 						<p className='movies__loading'>Загрузка...</p>
 					</>
 				) : (
-					<>
-						{error && <p className='movies__loading'>{error}</p>}
-						{foundMovies?.length === 0 ? (
-							<p className='movies__loading'>Ничего не найдено</p>
-						) : (
-							<MovieList movies={foundMovies}/>
-						)}
-					</>
+					localStorage.getItem('filteredMovies') && (
+						<MovieList
+							foundMovies={foundMovies}
+							handleAddMovie={handleAddMovie}
+							handleDeleteMovie={handleDeleteMovie}
+							error={error}
+							savedMovies={savedMovies}
+							savedResultMovies={savedResultMovies}
+							savedRequest={savedRequest}
+							setSavedRequest={setSavedRequest}
+							getSavedMovies={getSavedMovies}
+							buttonShown={buttonShown}
+							setButtonShown={setButtonShown}
+							moviesShown={moviesShown}
+							setMoviesShown={setMoviesShown}
+						/>
+					)
 				)}
+
 			</main>
 			<Footer/>
 		</>

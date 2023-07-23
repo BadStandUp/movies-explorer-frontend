@@ -10,9 +10,9 @@ export default function SearchForm({ switched, setSwitched, onSubmit, handleClic
 			: '',
 	);
 
-	const handleSearchChange = (e) => {
+	function handleSearchChange(e) {
 		setSearchQuery(e.target.value);
-	};
+	}
 
 	return (
 		<section className="search-form">
@@ -20,7 +20,7 @@ export default function SearchForm({ switched, setSwitched, onSubmit, handleClic
 				e.preventDefault();
 				onSubmit(searchQuery);
 			}}>
-				<img src={searchIcon} alt="" className="search-form__icon" />
+				<img src={searchIcon} alt="Поиск" className="search-form__icon" />
 				<input
 					type="text"
 					placeholder="Фильмы"
@@ -30,9 +30,7 @@ export default function SearchForm({ switched, setSwitched, onSubmit, handleClic
 					value={searchQuery || ''}
 					onChange={handleSearchChange}
 				/>
-				<button type="submit" className="search-form__button">
-					Найти
-				</button>
+				<button type="submit" className="search-form__button">Найти</button>
 			</form>
 			<SwitchSlider switched={switched} setSwitched={setSwitched} handleClick={handleClick} />
 		</section>

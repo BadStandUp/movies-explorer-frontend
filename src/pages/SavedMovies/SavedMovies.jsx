@@ -1,22 +1,19 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import './SavedMovies.css';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import MovieList from "../../components/MovieList/MovieList.jsx";
-import Preloader from '../../components/Preloader/Preloader.jsx';
-import * as mainApi from '../../utils/MainApi';
-import {SavedMoviesContext} from '../../contexts/SavedMoviesContext.js';
 import {SHORT_MOVIE_DURATION} from '../../utils/constants.js';
+import * as mainApi from '../../utils/MainApi.js';
+import Preloader from '../../components/Preloader/Preloader.jsx';
 
-export default function SavedMovies() {
-	const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
+export default function SavedMovies({handleAddMovie, handleDeleteMovie, savedMovies}) {
 	const [filteredMovies, setFilteredMovies] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [switched, setSwitched] = useState(false);
 	const [searchQuery, setSearchQuery] = useState('')
-
 
 	useEffect(() => {
 		const filtered = savedMovies.filter((movie) =>
@@ -35,7 +32,6 @@ export default function SavedMovies() {
 		setError('');
 		mainApi.getMovies()
 			.then((data) => {
-				setSavedMovies(data);
 				setFilteredMovies(data);
 			})
 			.catch((err) => {
@@ -50,9 +46,8 @@ export default function SavedMovies() {
 		fetchSavedMovies()
 	}, []);
 
-
 	const handleSubmitMovies = (input) => {
-		setSavedMovies(input);
+		setSearchQuery(input);
 	};
 
 	return (
@@ -71,7 +66,7 @@ export default function SavedMovies() {
 						{filteredMovies?.length === 0 ? (
 							<p className='saved-movies__loading'>Ничего не найдено</p>
 						) : (
-							<MovieList savedMovies={filteredMovies} />
+							<MovieList savedMovies={filteredMovies} handleAddMovie={handleAddMovie} handleDeleteMovie={handleDeleteMovie} />
 						)}
 					</>
 				)}
@@ -79,4 +74,4 @@ export default function SavedMovies() {
 			<Footer/>
 		</>
 	);
-};
+}

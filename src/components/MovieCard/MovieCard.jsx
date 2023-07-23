@@ -1,18 +1,19 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import './MovieCard.css';
-import {SavedMoviesContext} from '../../contexts/SavedMoviesContext.js';
-import * as mainApi from '../../utils/MainApi';
 import {useLocation} from 'react-router';
 import {SHORT_MOVIE_DURATION} from '../../utils/constants.js';
 
 
-export default function MovieCard({ movie, image, title }) {
+export default function MovieCard({
+									  movie,
+									  addMovie,
+									  deleteMovie,
+									  title,
+									  image,
+									  savedMovies,
+								  }) {
 	const location = useLocation();
-
-	const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
-
 	const [isLiked, setIsLiked] = useState(false);
-
 	const currentSavedMovie = savedMovies.find((movie) => movie.nameRU === title);
 
 	useEffect(() => {
@@ -21,21 +22,19 @@ export default function MovieCard({ movie, image, title }) {
 		}
 	}, [currentSavedMovie]);
 
-
-
 	const handleMovie = (e) => {
 		e.preventDefault();
 		if (location.pathname === '/movies') {
 			if (!isLiked) {
 				setIsLiked(true);
-				handleAddMovie(movie)
+				addMovie(movie)
 			} else {
 				setIsLiked(false);
-				handleDeleteMovie(currentSavedMovie._id);
+				deleteMovie(currentSavedMovie._id);
 			}
 		}
 		if (location.pathname === '/saved-movies') {
-			handleDeleteMovie(movie._id);
+			deleteMovie(movie._id);
 		}
 	};
 
