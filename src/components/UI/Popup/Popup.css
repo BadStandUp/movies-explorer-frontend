@@ -15,6 +15,13 @@
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+.popup_error {
+    border-bottom: 6px red solid;
+}
+
+.popup_success {
+    border-bottom: 6px green solid;
+}
 
 
 .popup_image {

@@ -1,17 +1,16 @@
 const BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 
-export const fetchMoviesData = async () => {
-    try {
-        const response = await fetch(`${BASE_URL}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (!response.ok) {
-            return Promise.reject(Error('Request failed'));
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('Error:', error);
-    }
+export const fetchMoviesData = () => {
+    return fetch(`${BASE_URL}`, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            if (!response.ok) {
+                return Promise.reject(Error('Request failed'));
+            }
+            return response.json();
+        })
 };
+

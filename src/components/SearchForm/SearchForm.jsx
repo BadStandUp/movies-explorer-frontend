@@ -1,22 +1,14 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import './SearchForm.css';
 import searchIcon from '../../images/search-icon.svg';
+import SwitchSlider from '../UI/Popup/SwitchSlider/SwitchSlider.jsx';
 
-export default function SearchForm({ onSubmit, onSwitchChange }) {
-	const [searchQuery, setSearchQuery] = useState('');
-	const [isSwitched, setIsSwitched] = useState(true);
-
-	useEffect(() => {
-		const storedSearchQuery = localStorage.getItem('search');
-		if (storedSearchQuery) {
-			setSearchQuery(storedSearchQuery);
-		}
-
-		const storedIsSwitched = localStorage.getItem('isSwitched');
-		if (storedIsSwitched) {
-			setIsSwitched(storedIsSwitched === 'false');
-		}
-	}, [isSwitched]);
+export default function SearchForm({ isSwitched, setIsSwitched, onSubmit }) {
+	const [searchQuery, setSearchQuery] = useState(
+		location.pathname === '/movies' && localStorage.getItem('search')
+			? localStorage.getItem('search')
+			: '',
+	);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -27,16 +19,6 @@ export default function SearchForm({ onSubmit, onSwitchChange }) {
 	const handleSearchChange = (e) => {
 		setSearchQuery(e.target.value);
 	};
-
-	const handleSwitchChange = (e) => {
-		const value = e.target.checked;
-		setIsSwitched(value);
-		onSwitchChange(value);
-	};
-
-	useEffect(() => {
-		localStorage.setItem('isSwitched', isSwitched.toString());
-	}, [isSwitched]);
 
 	return (
 		<section className="search-form">
@@ -55,18 +37,7 @@ export default function SearchForm({ onSubmit, onSwitchChange }) {
 					Найти
 				</button>
 			</form>
-			<div className="search-form__switch">
-				<label className="search-form__switch-container">
-					<input
-						type="checkbox"
-						className="search-form__switch-input"
-						checked={isSwitched}
-						onChange={handleSwitchChange}
-					/>
-					<span className="search-form__switch-slider"></span>
-				</label>
-				<p className="search-form__heading">Короткометражки</p>
-			</div>
+			<SwitchSlider isSwitched={isSwitched} setIsSwitched={setIsSwitched} />
 		</section>
 	);
 }

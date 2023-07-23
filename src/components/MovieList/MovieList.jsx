@@ -68,14 +68,14 @@ export default function MovieList({ movies }) {
 	}, []);
 
 	const handleLoadMore = () => {
-		setVisibleMovies(prevVisibleMovies => prevVisibleMovies + loadMoreCount);
+		setVisibleMovies((prevVisibleMovies) => prevVisibleMovies + loadMoreCount);
 	};
 
 	return (
 		<section className="movies-card-list">
 			<div className="movies-card-list__grid">
 				{showElements
-					? foundMovies.slice(0, visibleMovies).map(foundMovie => (
+					? (foundMovies ?? []).slice(0, visibleMovies).map((foundMovie) => (
 						<MovieCard
 							key={foundMovie.id}
 							movie={foundMovie}
@@ -83,11 +83,11 @@ export default function MovieList({ movies }) {
 							title={foundMovie.nameRU}
 						/>
 					))
-					: movies.slice(0, visibleMovies).map(movie => (
-						<MovieCard key={movie._id} movie={movie} image={movie.image} title={movie.nameRU}/>
+					: (movies ?? []).slice(0, visibleMovies).map((movie) => (
+						<MovieCard key={movie._id} movie={movie} image={movie.image} title={movie.nameRU} />
 					))}
 			</div>
-			{showElements && visibleMovies < (foundMovies || movies).length && (
+			{showElements && visibleMovies < (foundMovies || movies)?.length && (
 				<button className="movies-card-list__more" onClick={handleLoadMore}>Ещё</button>
 			)}
 		</section>

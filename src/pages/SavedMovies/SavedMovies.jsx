@@ -12,30 +12,9 @@ import {SHORT_MOVIE_DURATION} from '../../utils/constants.js';
 export default function SavedMovies() {
 	const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
 	const [filteredMovies, setFilteredMovies] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [isSwitched, setIsSwitched] = useState(false);
-
-	useEffect(() => {
-		fetchSavedMovies();
-	}, []);
-
-	useEffect(() => {
-		const searchQuery = localStorage.getItem('search');
-		if (!isSwitched) {
-			const filtered = savedMovies.filter((movie) =>
-				movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase())
-			);
-			setFilteredMovies(filtered);
-		} else {
-			const filteredWithSwitch = savedMovies.filter(
-				(movie) =>
-					movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase()) &&
-					movie.duration <= SHORT_MOVIE_DURATION
-			);
-			setFilteredMovies(filteredWithSwitch);
-		}
-	}, [savedMovies, isSwitched]);
 
 	const fetchSavedMovies = () => {
 		setIsLoading(true);
@@ -43,7 +22,7 @@ export default function SavedMovies() {
 		mainApi.getMovies()
 			.then((data) => {
 				setSavedMovies(data);
-				setFilteredMovies(data);
+				setFilteredMovies([data]);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -54,40 +33,42 @@ export default function SavedMovies() {
 			});
 	};
 
-	const handleFilter = useCallback(
-		() => {
-			const searchQuery = localStorage.getItem('search');
-			if (isSwitched) {
-				const filtered = savedMovies.filter((movie) =>
-					movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase())
-				);
-				setFilteredMovies(filtered);
-			} else {
-				const filteredWithSwitch = savedMovies.filter(
-					(movie) =>
-						movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase()) &&
-						movie.duration <= SHORT_MOVIE_DURATION
-				);
-				setFilteredMovies(filteredWithSwitch);
-			}
-		},
-		[isSwitched, savedMovies]
-	);
+	useEffect(() => {
+		const searchQuery = localStorage.getItem('search');
+		const filtered = savedMovies.filter((movie) =>
+			movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase())
+		);
+
+		if (isSwitched) {
+			setFilteredMovies(filtered.filter((movie) => movie.duration <= SHORT_MOVIE_DURATION));
+		} else {
+			setFilteredMovies(filtered);
+		}
+	}, [savedMovies, isSwitched]);
+
+	const handleFilter = useCallback(() => {
+		const searchQuery = localStorage.getItem('search');
+		const filtered = savedMovies.filter((movie) =>
+			movie.nameRU?.toLowerCase().includes(searchQuery?.toLowerCase())
+		);
+
+		if (isSwitched) {
+			setFilteredMovies(filtered.filter((movie) => movie.duration <= SHORT_MOVIE_DURATION));
+		} else {
+			setFilteredMovies(filtered);
+		}
+	}, [isSwitched, savedMovies]);
 
 	const handleSubmitMovies = () => {
 		fetchSavedMovies();
 		handleFilter();
 	};
 
-	const handleSwitchChange = (checked) => {
-		setIsSwitched(checked);
-	};
-
 	return (
 		<>
 			<Header/>
 			<main className="saved-movies">
-				<SearchForm onSubmit={handleSubmitMovies} onSwitchChange={handleSwitchChange}/>
+				<SearchForm onSubmit={handleSubmitMovies} isSwitched={isSwitched} setIsSwitched={setIsSwitched}/>
 				{isLoading ? (
 					<>
 						<Preloader fullScreen={false}/>
@@ -96,7 +77,7 @@ export default function SavedMovies() {
 				) : (
 					<>
 						{error && <p className='saved-movies__loading'>{error}</p>}
-						{filteredMovies.length === 0 ? (
+						{filteredMovies?.length === 0 ? (
 							<p className='saved-movies__loading'>Ничего не найдено</p>
 						) : (
 							<MovieList movies={filteredMovies} />

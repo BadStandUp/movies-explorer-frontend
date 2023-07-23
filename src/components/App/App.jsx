@@ -25,6 +25,7 @@ export default function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState('');
+    const [popupError, setPopupError] = useState(false);
 
     const navigate = useNavigate();
 
@@ -77,22 +78,29 @@ export default function App() {
         setIsLoading(true);
         try {
             await authApi.signup(name, email, password);
-            navigate('/signin', {replace: true});
+            await handleLoginSubmit(email, password);
+            setPopupMessage('Вы успешно зарегистрировались.');
+            setPopupError(false);
+            setShowPopup(true);
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 5000);
+            navigate('/signin', { replace: true });
         } catch (error) {
-            console.error('Registration failed:', error);
-            setPopupMessage('Ошибка при регистрации.');
+            if (error.toString().includes('400')) {
+                setPopupMessage('Переданы некорректные данные');
+            } else if (error.toString().includes('409')) {
+                setPopupMessage('Пользователь с таким E-mail уже зарегистрирован.');
+            } else {
+                setPopupMessage('Ошибка при регистрации.');
+            }
+            setPopupError(true);
             setShowPopup(true);
             setTimeout(() => {
                 setShowPopup(false);
             }, 5000);
         } finally {
-            await handleLoginSubmit(email, password);
             setIsLoading(false);
-            setPopupMessage('Вы успешно зарегистрировались.')
-            setShowPopup(true);
-            setTimeout(() => {
-                setShowPopup(false);
-            }, 5000);
         }
     };
 
@@ -102,21 +110,28 @@ export default function App() {
             await authApi.signin(email, password);
             setLoggedIn(true);
             setCurrentUser({});
-            navigate('/movies', {replace: true});
+            navigate('/movies', { replace: true });
+            setPopupMessage('Вы успешно залогинились.');
+            setPopupError(false);
+            setShowPopup(true);
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 5000);
         } catch (error) {
-            console.error('Login failed:', error);
-            setPopupMessage('Ошибка при логине.');
+            let errorMessage = 'Ошибка при логине.';
+            if (error.toString().includes('400')) {
+                errorMessage = 'Переданы некорректные данные.';
+            } else if (error.toString().includes('401')) {
+                errorMessage = 'Неправильные почта или пароль.';
+            }
+            setPopupError(true);
+            setPopupMessage(errorMessage);
             setShowPopup(true);
             setTimeout(() => {
                 setShowPopup(false);
             }, 5000);
         } finally {
             setIsLoading(false);
-            setPopupMessage('Вы успешно залогинились.');
-            setShowPopup(true);
-            setTimeout(() => {
-                setShowPopup(false);
-            }, 5000);
         }
     };
 
@@ -126,13 +141,13 @@ export default function App() {
         setLoggedIn(false);
         setCurrentUser({});
         setSavedMovies([]);
-        setPopupMessage('Вы успешно вышли.')
+        setPopupMessage('Вы успешно вышли.');
+        setPopupError(false);
         setShowPopup(true);
         setTimeout(() => {
             setShowPopup(false);
         }, 5000);
     };
-
 
   return (
     <div className="App">
@@ -142,24 +157,16 @@ export default function App() {
                     <SavedMoviesContext.Provider value={savedMoviesMemo}>
                         {isLoading ? (<Preloader fullScreen={true}/>) : ''}
                         <Routes>
-                            <Route path="/profile" element={<ProtectedRoute><Profile handleLogout={handleLogout}/></ProtectedRoute>}/>
-                            <Route path="/movies" element={<ProtectedRoute><Movies /></ProtectedRoute>}/>
-                            <Route path="/saved-movies" element={<ProtectedRoute><SavedMovies /></ProtectedRoute>}/>
+                            <Route exact path="/profile" element={<ProtectedRoute><Profile handleLogout={handleLogout}/></ProtectedRoute>}/>
+                            <Route exact path="/movies" element={<ProtectedRoute><Movies /></ProtectedRoute>}/>
+                            <Route exact path="/saved-movies" element={<ProtectedRoute><SavedMovies /></ProtectedRoute>}/>
                             <Route path="/" element={<Main />}/>
-                            <Route path="/signup" element={
-                                <GuestRoute>
-                                    <Register handleRegisterSubmit={handleRegisterSubmit}/>
-                                </GuestRoute>
-                                }/>
-                            <Route path="/signin" element={
-                                <GuestRoute>
-                                    <Login handleLoginSubmit={handleLoginSubmit}/>
-                                </GuestRoute>
-                                }/>
+                            <Route path="/signup" element={<GuestRoute><Register handleRegisterSubmit={handleRegisterSubmit}/></GuestRoute>}/>
+                            <Route path="/signin" element={<GuestRoute><Login handleLoginSubmit={handleLoginSubmit}/></GuestRoute>}/>
                             <Route path="*" element={<NotFound />}/>
                         </Routes>
                         {showPopup && (
-                            <Popup message={popupMessage} />
+                            <Popup message={popupMessage} error={popupError} />
                         )}
                     </SavedMoviesContext.Provider>
                 </AuthContext.Provider>
