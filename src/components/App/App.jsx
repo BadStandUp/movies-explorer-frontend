@@ -17,9 +17,12 @@ import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import {AuthContext} from '../../contexts/AuthContext.js';
 import {SavedMoviesContext} from '../../contexts/SavedMoviesContext.js';
 import * as authApi from '../../utils/AuthApi';
+import * as mainApi from '../../utils/MainApi.js';
 
 export default function App() {
+    const [movies, setMovies] = useState([]);
     const [savedMovies, setSavedMovies] = useState([]);
+    const [savedResultMovies, setSavedResultMovies] = useState([]);
     const [currentUser, setCurrentUser] = useState({});
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -148,6 +151,34 @@ export default function App() {
             setShowPopup(false);
         }, 5000);
     };
+
+    // Фильмы
+
+    function handleAddMovie(movie) {
+        mainApi.addMovie(movie)
+            .then((newMovie) => {
+                setSavedMovies([...savedMovies, newMovie]);
+                return savedMovies;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    function handleDeleteMovie(id) {
+        mainApi.deleteMovie(id)
+            .then(() => {
+                setSavedMovies(
+                    savedMovies.filter((item) => {
+                        return item._id !== id;
+                    }),
+                );
+                return savedMovies;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 
   return (
     <div className="App">

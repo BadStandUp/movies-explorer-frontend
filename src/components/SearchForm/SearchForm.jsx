@@ -1,20 +1,14 @@
 import {useState} from 'react';
 import './SearchForm.css';
 import searchIcon from '../../images/search-icon.svg';
-import SwitchSlider from '../UI/Popup/SwitchSlider/SwitchSlider.jsx';
+import SwitchSlider from '../UI/SwitchSlider/SwitchSlider.jsx';
 
-export default function SearchForm({ isSwitched, setIsSwitched, onSubmit }) {
+export default function SearchForm({ switched, setSwitched, onSubmit, handleClick }) {
 	const [searchQuery, setSearchQuery] = useState(
 		location.pathname === '/movies' && localStorage.getItem('search')
 			? localStorage.getItem('search')
 			: '',
 	);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		localStorage.setItem('search', searchQuery);
-		onSubmit();
-	};
 
 	const handleSearchChange = (e) => {
 		setSearchQuery(e.target.value);
@@ -22,7 +16,10 @@ export default function SearchForm({ isSwitched, setIsSwitched, onSubmit }) {
 
 	return (
 		<section className="search-form">
-			<form className="search-form__search-bar" name="searchForm" onSubmit={handleSubmit}>
+			<form className="search-form__search-bar" name="searchForm" onSubmit={e => {
+				e.preventDefault();
+				onSubmit(searchQuery);
+			}}>
 				<img src={searchIcon} alt="" className="search-form__icon" />
 				<input
 					type="text"
@@ -37,7 +34,7 @@ export default function SearchForm({ isSwitched, setIsSwitched, onSubmit }) {
 					Найти
 				</button>
 			</form>
-			<SwitchSlider isSwitched={isSwitched} setIsSwitched={setIsSwitched} />
+			<SwitchSlider switched={switched} setSwitched={setSwitched} handleClick={handleClick} />
 		</section>
 	);
 }

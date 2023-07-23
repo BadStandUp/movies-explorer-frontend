@@ -11,7 +11,9 @@ import {SHORT_MOVIE_DURATION} from '../../utils/constants.js';
 export default function Movies() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
-	const [isSwitched, setIsSwitched] = useState(false);
+	const isSwitched = localStorage.getItem('switch');
+	const [switched, setSwitched] = useState(false);
+
 
 	const fetchMovies = () => {
 		setIsLoading(true);
@@ -25,9 +27,7 @@ export default function Movies() {
 			})
 			.catch((err) => {
 				console.error(err);
-				setError(
-					'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
-				);
+				setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
 			})
 			.finally(() => setIsLoading(false));
 	};
@@ -51,15 +51,18 @@ export default function Movies() {
 		}
 
 		if (!isSwitched) {
-			return filterDefault();
+			filterDefault();
 		} else {
-			return filterWithSwitch();
+			filterWithSwitch();
 		}
+
+		return {filter: filterDefault, filterWithSwitch: filterWithSwitch}
 	}
 
 	const foundMovies = JSON.parse(localStorage.getItem('filteredMovies'));
 
-	const handleSubmitMovies = () => {
+	const handleSubmitMovies = (input) => {
+		localStorage.setItem('search', input);
 		fetchMovies();
 	};
 
@@ -67,7 +70,7 @@ export default function Movies() {
 		<>
 			<Header/>
 			<main className="movies">
-				<SearchForm onSubmit={handleSubmitMovies} isSwitched={isSwitched} setIsSwitched={setIsSwitched} />
+				<SearchForm onSubmit={handleSubmitMovies} switched={switched} setSwitched={setSwitched} handleClick={handleFilter}/>
 				{isLoading ? (
 					<>
 						<Preloader fullScreen={false} />

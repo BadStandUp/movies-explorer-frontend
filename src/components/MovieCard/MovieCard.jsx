@@ -21,31 +21,7 @@ export default function MovieCard({ movie, image, title }) {
 		}
 	}, [currentSavedMovie]);
 
-	function handleAddMovie(movie) {
-		mainApi.addMovie(movie)
-			.then((newMovie) => {
-				setSavedMovies([...savedMovies, newMovie]);
-				return savedMovies;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
 
-	function handleDeleteMovie(id) {
-		mainApi.deleteMovie(id)
-			.then(() => {
-				setSavedMovies(
-					savedMovies.filter((item) => {
-						return item._id !== id;
-					}),
-				);
-				return savedMovies;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
 
 	const handleMovie = (e) => {
 		e.preventDefault();

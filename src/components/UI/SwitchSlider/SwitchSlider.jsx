@@ -2,31 +2,34 @@ import './SwitchSlider.css';
 import {useEffect} from 'react';
 import {useLocation} from 'react-router';
 
-export default function SwitchSlider({ isSwitched, setIsSwitched }) {
+export default function SwitchSlider({ switched, setSwitched, handleClick }) {
 	const location = useLocation();
-	const storedSwitch = localStorage.getItem('switch')
+	const storedSwitch = localStorage.getItem('switch');
 
 	useEffect(() => {
 		if (storedSwitch && location.pathname === '/movies') {
-			setIsSwitched(true);
+			setSwitched(true);
 		}
-	}, [storedSwitch, setIsSwitched, location.pathname])
+	}, [storedSwitch, setSwitched, location.pathname]);
 
 	const handleSwitchChange = () => {
 		if (location.pathname === '/movies') {
-			if (!isSwitched) {
-				setIsSwitched(true);
+			const click = handleClick();
+			if (!switched) {
+				setSwitched(true);
 				localStorage.setItem('switch', true);
+				click.filterWithSwitch();
 			} else {
-				setIsSwitched(false);
-				localStorage.removeItem('switch')
+				setSwitched(false);
+				localStorage.removeItem('switch');
+				click.filter();
 			}
 		}
 		if (location.pathname === '/saved-movies') {
-			if (!isSwitched) {
-				setIsSwitched(true);
+			if (!switched) {
+				setSwitched(true);
 			} else {
-				setIsSwitched(false);
+				setSwitched(false);
 			}
 		}
 	}
@@ -37,7 +40,7 @@ export default function SwitchSlider({ isSwitched, setIsSwitched }) {
 				<input
 					type="checkbox"
 					className="search-form__switch-input"
-					checked={isSwitched}
+					checked={switched}
 					onChange={handleSwitchChange}
 				/>
 				<span className="search-form__switch-slider"></span>

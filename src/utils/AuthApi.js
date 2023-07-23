@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.kino.nomoredomains.rocks';
+const BASE_URL = 'http://localhost:3000';
 
 export const signin = async (email, password) => {
     const response = await fetch(`${BASE_URL}/signin`, {
