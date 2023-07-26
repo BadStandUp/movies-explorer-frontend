@@ -1,12 +1,28 @@
-# movies-explorer-frontend
-Фронтенд проекта по поиску фильмов.
+# Movies Explorer
+Фронтенд проекта по поиску фильмов. \
+[https://kino.nomoredomains.rocks/](https://kino.nomoredomains.rocks/)
 
-## Ссылки на проект
+### Функционал
 
-Домен: https://kino.nomoredomains.rocks
+* Регистрация и авторизация пользователя
+* Просмотр списка доступных фильмов
+* Сохрание и удаление фильмов в личном профиле
+* Редактирование данных профиля
+* Пользователь получает сообщения об ошибках
+* Защищённые роуты
+* Анимации инетрактивных элементов
 
-[Ссылка на пулреквест](https://github.com/BadStandUp/movies-explorer-frontend/pull/2)
+### Технологии
 
-[Ссылка на макет](https://disk.yandex.ru/d/oRkXCdqHwY8P7A)
+* HTML/CSS/JS
+* Адаптивная вёрстка
+* React
+* React Router v6
+* REST API
+* БЭМ
 
-[Ссылка на бэкенд:](https://github.com/BadStandUp/movies-explorer-api)
+#### Ссылки на проект
+
+[Ссылка на макет](https://www.figma.com/file/qVnHFzwpN5GQ5yg2wX5gx0/Diploma?type=design&node-id=891%3A3857&mode=design&t=MZyceY7UxOUgewGO-1)
+
+[Ссылка на бэкенд](https://github.com/BadStandUp/movies-explorer-api)

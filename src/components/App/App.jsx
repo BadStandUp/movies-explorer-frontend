@@ -112,7 +112,7 @@ export default function App() {
             setLoggedIn(true);
             setCurrentUser({});
             navigate('/movies', { replace: true });
-            setPopupMessage('Вы успешно залогинились.');
+            setPopupMessage('Вы успешно авторизовались.');
             setPopupError(false);
             setShowPopup(true);
             setTimeout(() => {

@@ -12,4 +12,4 @@ export const MOVIES_SHOWN_MOBILE = 5;
 export const MOVIES_MORE_FULL = 4;
 export const MOVIES_MORE_DESKTOP = 3;
 export const MOVIES_MORE_TABLET = 2;
-export const MOVIES_MORE_MOBILE = 1;
+export const MOVIES_MORE_MOBILE = 2;
