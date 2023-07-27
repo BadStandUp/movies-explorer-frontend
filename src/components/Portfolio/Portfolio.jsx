@@ -12,7 +12,7 @@ export default function Portfolio() {
 				<span>Адаптивный сайт</span>
 				<span>&#8599;</span>
 			</a>
-			<a href='https://github.com/BadStandUp/react-mesto-api-full-gha' className='portfolio__link' rel='nofollow noopener noreferrer' target='_blank'>
+			<a href='https://github.com/BadStandUp/react-mesto-auth' className='portfolio__link' rel='nofollow noopener noreferrer' target='_blank'>
 				<span>Одностраничное приложение</span>
 				<span>&#8599;</span>
 			</a>
