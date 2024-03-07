@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.kino.nomoredomains.rocks';
+const BASE_URL = 'https://kino-explorer-api.vercel.app';
 
 export const getMovies = () => {
     const token = localStorage.getItem('token');

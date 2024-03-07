@@ -1,6 +1,6 @@
 # Movies Explorer
 Фронтенд проекта по поиску фильмов. \
-[https://kino.nomoredomains.rocks/](https://kino.nomoredomains.rocks/)
+[https://kino-explorer.vercel.app/](https://kino-explorer.vercel.app/)
 
 ### Функционал
 
